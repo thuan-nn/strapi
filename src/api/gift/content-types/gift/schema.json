@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "gifts",
+  "info": {
+    "singularName": "gift",
+    "pluralName": "gifts",
+    "displayName": "Gift"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "integer",
+      "default": 0,
+      "required": false
+    },
+    "given": {
+      "type": "integer",
+      "default": 0
+    },
+    "win_rate": {
+      "type": "float",
+      "default": 0
+    },
+    "type": {
+      "type": "string",
+      "required": false
+    },
+    "order": {
+      "type": "integer"
+    },
+    "lotteries": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::lottery.lottery",
+      "mappedBy": "gift_id"
+    }
+  }
+}

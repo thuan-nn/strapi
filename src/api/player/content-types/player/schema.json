@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "players",
+  "info": {
+    "singularName": "player",
+    "pluralName": "players",
+    "displayName": "Players",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "national_id": {
+      "type": "string"
+    },
+    "spin": {
+      "type": "integer",
+      "default": 0
+    },
+    "can_spin": {
+      "type": "integer",
+      "default": 0
+    },
+    "lotteries": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::lottery.lottery",
+      "mappedBy": "player_id"
+    }
+  }
+}

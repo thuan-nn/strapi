@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "lotteries",
+  "info": {
+    "singularName": "lottery",
+    "pluralName": "lotteries",
+    "displayName": "Lottery",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "gift_id": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::gift.gift",
+      "inversedBy": "lotteries"
+    },
+    "player_id": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::player.player",
+      "inversedBy": "lotteries"
+    },
+    "is_win": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

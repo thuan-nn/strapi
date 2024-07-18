@@ -4,30 +4,30 @@
 import WheelService from '../services/wheel';
 
 export default {
-  play: async (ctx, next) => {
+  play: async (ctx) => {
     try {
       await ctx.validate({
         national_id: 'required|string',
       });
 
-      // const player = await strapi.db
-      //   .query('api::player.player')
-      //   .findOne({
-      //     where: {
-      //       national_id: ctx.request.body.national_id,
-      //     },
-      //   });
-
-      const player = ctx.get('player');
-
-      console.log(player);
+      const player = await strapi.db
+        .query('api::player.player')
+        .findOne({
+          where: {
+            national_id: ctx.request.body.national_id,
+          },
+        });
 
       if (player) {
         const gift = await WheelService.randomGift();
 
-        await WheelService.storeLottery(gift, player);
+        if (gift) {
+          await WheelService.storeLottery(gift, player);
 
-        ctx.body = gift;
+          ctx.body = gift;
+        } else {
+          ctx.body = [];
+        }
       }
     } catch (err) {
       ctx.body = err;

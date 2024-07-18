@@ -1,7 +1,6 @@
 /**
- * `Wheel` middleware
+ * `validate` middleware
  */
-
 import niv from 'node-input-validator';
 
 export default (config) => {

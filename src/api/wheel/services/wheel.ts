@@ -8,24 +8,32 @@ import Player from '../../player/interfaces/player.interface';
 
 export default {
   randomGift: async () => {
-    const gifts = await strapi.db.query('api::gift.gift').findMany();
+    // const gifts = await strapi.db.query('api::gift.gift').findMany();
 
-    const totalPercentage = gifts.reduce(
-      (sum: number, item: Gift) => sum + item.win_rate,
-      0,
+    const gifts = await strapi.db.connection.raw(
+      `select * from gifts where published_at is not null and quantity > given`,
     );
 
-    let randomNumber = Math.random() * totalPercentage;
+    if (gifts) {
+      const totalPercentage = gifts[0].reduce(
+        (sum: number, item: Gift) => sum + item.win_rate,
+        0,
+      );
 
-    for (const gift of gifts) {
-      if (randomNumber <= gift.win_rate) {
-        return gift;
+      let randomNumber = Math.random() * totalPercentage;
+
+      for (const gift of gifts) {
+        if (randomNumber <= gift.win_rate) {
+          return gift;
+        }
+
+        randomNumber -= gift.win_rate;
       }
 
-      randomNumber -= gift.win_rate;
+      return gifts[gifts.length - 1];
     }
 
-    return gifts[gifts.length - 1];
+    return [];
   },
 
   storeLottery: async (gift: Gift, player: Player) => {

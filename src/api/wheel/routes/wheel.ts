@@ -8,7 +8,7 @@ export default {
         policies: [],
         middlewares: [
           'api::wheel.validate',
-          'api::wheel.check-user-spin',
+          // 'api::wheel.user-can-spin',
         ],
         auth: false,
       },

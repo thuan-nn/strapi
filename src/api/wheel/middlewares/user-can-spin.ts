@@ -1,5 +1,5 @@
 /**
- * `CheckUserSpin` middleware
+ * `user-can-spin` middleware
  */
 
 import { Strapi } from '@strapi/strapi';
@@ -15,16 +15,10 @@ export default (config, { strapi }: { strapi: Strapi }) => {
         },
       });
 
-    if (!player) {
-      return (ctx.response.body = 'User Is Not Exist');
+    if (player && player?.spin >= player?.can_spin) {
+      return (ctx.body = 'Is Not Enough Turn To Play');
     }
 
-    if (player.spin >= player.can_spin) {
-      return (ctx.response.body = 'Is not enough number of turn');
-    }
-
-    ctx.set('player', player);
-
-    return next();
+    await next();
   };
 };
